@@ -3,6 +3,7 @@ import { getRepository } from 'typeorm';
 import User from '../models/User';
 
 class UserController {
+    
     async store(req: Request, res: Response) {
 
         const { email, password } = req.body;
@@ -20,6 +21,15 @@ class UserController {
         await userRepo.save(user)
 
         return res.json(user);
+    }
+
+    async getAll(req: Request, res: Response) {
+
+            const userRepo = getRepository(User);
+
+            const users = await userRepo.find();
+
+            return res.json(users)
     }
 }
 
