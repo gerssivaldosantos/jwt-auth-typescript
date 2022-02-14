@@ -4,6 +4,8 @@ export class CreateUsersTable1644852117538 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(
+            /* Extesion installation for use in "id" column, 
+            this can do automatic uuid creation */
             'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";'
         )
         await queryRunner.createTable(
