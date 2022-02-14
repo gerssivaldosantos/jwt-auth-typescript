@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
-import { getRepository, Repository } from 'typeorm';
+import { getRepository } from 'typeorm';
 import bcrypt from 'bcryptjs';
 import User from '../models/User';
+import jwt from 'jsonwebtoken'
 
 class AuthController {
     async authenticate(req: Request, res: Response) {
@@ -16,10 +17,16 @@ class AuthController {
 
         }
         const isValidPassword = await bcrypt.compare(password, user.password);
-        if (!isValidPassword){
+        if (!isValidPassword) {
             return res.status(401).json({ message: 'Invalid password' });
         }
-        
+
+        const token = jwt.sign({ id: user.id }, 'secret', { expiresIn: '1d' })
+
+        return res.json({
+            user,
+            token
+        });
 
 
     }
