@@ -9,6 +9,7 @@ class AuthController {
         const { email, password } = req.body;
         const user = await userRepo.findOne({ where: { email } });
 
+        
         if (!user) {
             {
                 return res.status(401).json({ message: 'User not found' });
@@ -34,4 +35,4 @@ class AuthController {
 }
 
 
-export default new AuthController();
+export default new AuthController()
