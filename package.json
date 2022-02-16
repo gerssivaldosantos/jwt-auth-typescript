@@ -7,9 +7,9 @@
   "license": "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx nodemon --exec ts-node src/server.ts",
-    "dev:debug": "npx nodemon --exec ts-node-dev --transpile-only --respawn --inspect=4321 --project tsconfig.json src/server.ts",
-    "typeorm": "npx ts-node ./node_modules/typeorm/cli.js"
+    "dev": "ts-node-dev --transpile-only --respawn --project tsconfig.json src/server.ts",
+    "dev:debug": "ts-node-dev --transpile-only --respawn --inspect=4321 --project tsconfig.json src/server.ts",
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
