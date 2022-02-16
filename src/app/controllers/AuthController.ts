@@ -7,8 +7,14 @@ class AuthController {
     async authenticate(req: Request, res: Response) {
         const userRepo = getRepository(User);
         const { email, password } = req.body;
-        const user = await userRepo.findOne({ where: { email } });
+        const user = await userRepo.
+        createQueryBuilder('user').
+        select().
+        addSelect("user.password").
+        where("user.email = :email", { email }).
+        getOne();
 
+        
         if (!user) {
             {
                 return res.status(401).json({ message: 'User not found' });
@@ -34,4 +40,4 @@ class AuthController {
 }
 
 
-export default new AuthController();
+export default new AuthController()
