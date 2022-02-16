@@ -6,11 +6,12 @@ interface TokenPayload{
     iat: number;
     exp: number;
 }
+
+function formatToken(token: string): string{
+    return token.replace('Bearer', '').trim();
+}
+
 class AuthMiddleware{
-    
-    formatToken(token: string){
-        return token.replace('Bearer ', '').trim();
-    }
 
     check(req: Request, res: Response, next: NextFunction){
 
@@ -23,13 +24,14 @@ class AuthMiddleware{
                 })
             }
 
+      
+            const token = formatToken(authorization);
             const secret = process.env.JWT_SECRET_KEY?? "";
-            const token = this.formatToken(authorization);
             const data = jwt.verify(token,secret);
             const {id, iat, exp} = data as TokenPayload;
-            req.user.userId = id;
-            req.user.iat = iat;
-            req.user.exp = exp;
+            req.userId = id;
+            req.iat = iat;
+            req.exp = exp;
             return next();
         }
        
