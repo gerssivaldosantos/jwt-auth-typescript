@@ -1,10 +1,8 @@
-declare namespace Express{
-    export interface Request{
-        user:{
-            userId: string;
-            iat: number;
-            exp: number;
-        }
-      
+declare namespace Express {
+    export interface Request {
+        userId: string;
+        iat: number;
+        exp: number;
+
     }
 }
