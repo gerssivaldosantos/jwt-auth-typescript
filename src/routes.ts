@@ -12,7 +12,6 @@ router.post('/user',
     UserController.store);
 
 router.get('/users',
-    ValidateMiddleware.validateSyntax,
     AuthMiddleware.checkToken,
     UserController.getAll);
 
