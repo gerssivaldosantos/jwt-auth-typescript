@@ -7,7 +7,7 @@ const router = Router();
 
 /* Basic actions */
 router.post('/user', UserController.store);
-router.get('/users', AuthMiddleware.check, UserController.getAll);
+router.get('/users', AuthMiddleware.checkToken, UserController.getAll);
 router.put('/user/:id', UserController.update);
 router.delete('/user/:id', UserController.delete);
 /* Authenticate */

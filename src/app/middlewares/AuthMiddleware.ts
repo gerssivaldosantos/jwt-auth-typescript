@@ -12,8 +12,8 @@ function formatToken(token: string): string{
 }
 
 class AuthMiddleware{
-
-    check(req: Request, res: Response, next: NextFunction){
+    
+    checkToken(req: Request, res: Response, next: NextFunction){
 
         const { authorization } = req.headers;
 
@@ -41,6 +41,7 @@ class AuthMiddleware{
             })
         }
     }
+
 }
 
 export default new AuthMiddleware();
