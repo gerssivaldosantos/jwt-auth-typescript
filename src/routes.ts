@@ -22,6 +22,7 @@ router.delete('/user/:id', UserController.delete);
 /* Authenticate */
 
 router.post('/auth', 
+    ValidateMiddleware.validateEmail,
     ValidateMiddleware.validateSyntax,
     AuthController.authenticate);
 
