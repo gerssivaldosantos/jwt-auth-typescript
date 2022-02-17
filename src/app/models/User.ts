@@ -20,6 +20,12 @@ class User {
     hashPassword() {
         this.password = bcrypt.hashSync(this.password, 8);
     }
+
+    @Column()
+    email_token: string;
+
+    @Column()
+    is_validated: boolean;
      
 }
 
