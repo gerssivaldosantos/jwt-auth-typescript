@@ -26,4 +26,6 @@ router.post('/auth',
     ValidateMiddleware.validateSyntax,
     AuthController.authenticate);
 
+router.get('/validate_email/:email_token', AuthController.activate);
+
 export default router;
