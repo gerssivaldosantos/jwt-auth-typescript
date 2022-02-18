@@ -22,8 +22,8 @@ router.delete('/user/:id', UserController.delete);
 /* Authenticate */
 
 router.post('/auth', 
-    ValidateMiddleware.validateEmail,
     ValidateMiddleware.validateSyntax,
+    ValidateMiddleware.validateEmail,
     AuthController.authenticate);
 
 router.get('/validate_email/:email_token', AuthController.activate);
