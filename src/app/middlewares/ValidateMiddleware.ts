@@ -36,7 +36,7 @@ class ValidateMiddleware {
                 return res.status(404).json({ message: 'User not found' });
             }
 
-            const { is_validated, email_token } = user;
+            const { is_validated } = user;
             
             if (!is_validated) {
                 user.email_token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
@@ -44,7 +44,7 @@ class ValidateMiddleware {
                 
                 return res.status(400).json({
                     error: "email is not validated",
-                    url: process.env.BASE_URL + "/validate_email/" + email_token
+                    url: process.env.BASE_URL + "/validate_email/" + user.email_token
                 })
             }
 
