@@ -24,7 +24,10 @@
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.13.2",
     "express": "^4.17.2",
+    "install": "^0.13.0",
     "jsonwebtoken": "^8.5.1",
+    "nodemailer": "^6.7.2",
+    "npm": "^8.5.1",
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.41"
