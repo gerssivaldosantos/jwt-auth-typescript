@@ -7,9 +7,9 @@ class UserController {
 
     async store(req: Request, res: Response) {
 
-        const { email, password } = req.body;
-
-        const email_token = "123"
+        let { email, password } = req.body;
+        
+        const email_token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15); 
 
         const userRepo = getRepository(User);
 
@@ -18,6 +18,7 @@ class UserController {
         if (userExists) {
             return res.sendStatus(409);
         }
+        password = bcrypt.hashSync(password, 8);
 
         const user = await userRepo.create({ email, password, email_token });
 
