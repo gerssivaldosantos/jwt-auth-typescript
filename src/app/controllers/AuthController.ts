@@ -8,13 +8,13 @@ class AuthController {
         const userRepo = getRepository(User);
         const { email, password } = req.body;
         const user = await userRepo.
-        createQueryBuilder('user').
-        select().
-        addSelect("user.password").
-        where("user.email = :email", { email }).
-        getOne();
+            createQueryBuilder('user').
+            select().
+            addSelect("user.password").
+            where("user.email = :email", { email }).
+            getOne();
 
-        
+
         if (!user) {
             {
                 return res.status(401).json({ message: 'User not found' });
@@ -26,15 +26,45 @@ class AuthController {
             return res.status(401).json({ message: 'Invalid password' });
         }
 
-        const secret = 'secret';
+        const secret = process.env.JWT_SECRET_KEY || '';
 
-        const token = jwt.sign({ id: user.id }, secret , { expiresIn: '1d' })
+        const token = jwt.sign({ id: user.id }, secret, { expiresIn: '1d' })
 
         return res.json({
             user,
             token
         });
 
+    }
+
+    async activate(req: Request, res: Response) {
+
+        try{
+            const { email_token } = req.params;
+
+            const repository = getRepository(User);
+    
+            const user = await repository.findOne({
+                where: {
+                    email_token: email_token
+                }
+            })
+    
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+    
+            user.is_validated = true;
+            await repository.save(user);
+    
+            return res.status(200).json({ message: 'User activated' });
+        }
+        catch(err){
+            return res.status(500).json({
+                error: err
+            })
+        }
+       
 
     }
 }
