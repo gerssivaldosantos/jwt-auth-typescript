@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 import User from '../models/User';
 import { validate } from 'class-validator';
 import { getRepository } from 'typeorm';
-
 class ValidateMiddleware {
     async validateSyntax(req: Request, res: Response, next: NextFunction) {
         try {
@@ -40,6 +39,9 @@ class ValidateMiddleware {
             const { is_validated, email_token } = user;
             
             if (!is_validated) {
+                user.email_token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+                await repository.save(user);
+                
                 return res.status(400).json({
                     error: "email is not validated",
                     url: process.env.BASE_URL + "/validate_email/" + email_token
