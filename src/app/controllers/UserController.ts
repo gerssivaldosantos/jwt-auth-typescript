@@ -20,7 +20,7 @@ class UserController {
         }
         password = bcrypt.hashSync(password, 8);
 
-        const user = await userRepo.create({ email, password, email_token });
+        const user = userRepo.create({ email, password, email_token });
 
         await userRepo.save(user)
 
