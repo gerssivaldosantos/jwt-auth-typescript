@@ -23,6 +23,9 @@ router.delete('/user/:id', UserController.delete);
 
 router.post('/auth', 
     ValidateMiddleware.validateSyntax,
+    ValidateMiddleware.validateEmail,
     AuthController.authenticate);
+
+router.get('/validate_email/:email_token', AuthController.activate);
 
 export default router;

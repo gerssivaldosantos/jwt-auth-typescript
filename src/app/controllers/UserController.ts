@@ -1,12 +1,15 @@
 import { Request, Response } from 'express';
 import { getRepository, Repository } from 'typeorm';
 import User from '../models/User';
+import bcrypt from 'bcryptjs';
 
 class UserController {
 
     async store(req: Request, res: Response) {
 
-        const { email, password } = req.body;
+        let { email, password } = req.body;
+        
+        const email_token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15); 
 
         const userRepo = getRepository(User);
 
@@ -15,12 +18,13 @@ class UserController {
         if (userExists) {
             return res.sendStatus(409);
         }
+        password = bcrypt.hashSync(password, 8);
 
-        const user = await userRepo.create({ email, password });
+        const user = userRepo.create({ email, password, email_token });
 
         await userRepo.save(user)
 
-        return res.json(user);
+        return res.json(user.id);
     }
 
     async getAll(req: Request, res: Response) {
@@ -41,7 +45,8 @@ class UserController {
             return res.status(404).json({ message: 'User not found' });
         }
         user.email = email;
-        user.password = password;
+        user.password = bcrypt.hashSync(password, 8);
+        
         try {
             await userRepo.save(user);
         }
