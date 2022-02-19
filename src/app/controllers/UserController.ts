@@ -24,7 +24,7 @@ class UserController {
 
         await userRepo.save(user)
 
-        return res.json(user);
+        return res.json(user.id);
     }
 
     async getAll(req: Request, res: Response) {
